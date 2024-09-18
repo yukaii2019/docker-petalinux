@@ -90,12 +90,20 @@ WORKDIR /opt
 USER petalinux
 
 # Install PetaLinux
+
+COPY --chown=petalinux:petalinux ${PETALINUX_INSTALLER} .
 RUN chown -R petalinux:petalinux . \
-	&& wget -q ${HTTP_SERV}/${PETALINUX_INSTALLER} \
 	&& chmod a+x ${PETALINUX_INSTALLER} \
 	&& SKIP_LICENSE=y ./${PETALINUX_FILE}${PETALINUX_INSTALLER} --skip_license --dir /opt/${PETALINUX_BASE} \
 	&& rm -f ./${PETALINUX_INSTALLER} \
 	&& rm -f petalinux_installation_log
+
+# RUN chown -R petalinux:petalinux . \
+# 	&& wget -q ${HTTP_SERV}/${PETALINUX_INSTALLER} \
+# 	&& chmod a+x ${PETALINUX_INSTALLER} \
+# 	&& SKIP_LICENSE=y ./${PETALINUX_FILE}${PETALINUX_INSTALLER} --skip_license --dir /opt/${PETALINUX_BASE} \
+# 	&& rm -f ./${PETALINUX_INSTALLER} \
+# 	&& rm -f petalinux_installation_log
 
 # Source settings at login
 USER root
